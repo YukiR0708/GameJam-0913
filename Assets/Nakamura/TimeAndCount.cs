@@ -29,6 +29,8 @@ public class TimeAndCount : MonoBehaviour
     [Header("スタートまでのカウント"), SerializeField] public bool _timeStartToF = false;
     /// <summary>Result用のText変数</summary>
     [Header("Resultを表示するTextを設定"), SerializeField] Text _ResultText = default;
+    [Header("お化けのカウント終了"), SerializeField] public bool _ghostCountToF = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +48,7 @@ public class TimeAndCount : MonoBehaviour
         }
         
         //制限時間がゼロになったらtrueを返す
-        if (_time == 0)
+        if (_time <= 0)
         {
             _timeLimitToF = true;
             _time = 0;
@@ -54,21 +56,9 @@ public class TimeAndCount : MonoBehaviour
         }
 
         //制限時間が0になったときに集計を開始する
-        if (_timeLimitToF)
+        if (_timeLimitToF && _ghostCountToF)
         {
-            //Player1の集計
-            if (_p1Count == _ghostCount)
-            {
-                _player1ClearToF = true;
-            }
-
-            //Player2の集計
-            if (_p2Count == _ghostCount)
-            {
-                _player2ClearToF = true;
-            }
-
-            Result();
+            PlayerCount();
         }
     }
 
@@ -77,7 +67,7 @@ public class TimeAndCount : MonoBehaviour
     {
         if (_player1ClearToF && _player2ClearToF)
         {
-            _ResultText.text = ("Your are Win!!");
+            _ResultText.text = ("P1 P2 Win!!");
         }
         else if (_player1ClearToF)
         {
@@ -91,5 +81,22 @@ public class TimeAndCount : MonoBehaviour
         {
             _ResultText.text = ("Draw");
         }
+    }
+
+    private void PlayerCount()
+    {
+        //Player1の集計
+        if (_p1Count == _ghostCount)
+        {
+            _player1ClearToF = true;
+        }
+
+        //Player2の集計
+        if (_p2Count == _ghostCount)
+        {
+            _player2ClearToF = true;
+        }
+
+        Result();
     }
 }

@@ -9,35 +9,41 @@ public class GhostsCountAndSpawn : MonoBehaviour
     [SerializeField] Transform _rangeB;
     [Header("ç≈ëÂèoåªêî"), SerializeField] int _maxcount = 30;
     [Header("ç≈è¨èoåªêî"), SerializeField] int _mincount = 20;
-    bool _timeLimit;
-    List<GhostsCountAndSpawn> _ghosts;
     [SerializeField] TimeAndCount _count;
-    private void Awake()
+    bool _go = true;
+    
+    
+    private void Update()
     {
-        //_ghosts = new List<GameObject>();
+        if (_count._timeStartToF && _go)
+        {
+            _go = false;
+            GhostPop();
+            
+        }
+
+
+        if (_count._timeLimitToF == true && _count._ghostList.Count != 0)
+        {
+            Destroy(_count._ghostList[0]);
+            _count._ghostList.RemoveAt(0);
+            _count._ghostCount++;
+            Debug.Log(_count._ghostCount);
+        }
+        else if (_count._timeLimitToF == true && _count._ghostList.Count == 0)
+        {
+            _count._ghostCountToF = true;
+        }
     }
-    void Start()
+
+    void GhostPop()
     {
-        //_ghosts = GetComponent<TimeAndCount>()._ghostList;
-        //_timeLimit = GetComponent<TimeAndCount>()._timeLimitToF;
         int spawnCount = Random.Range(_mincount, _maxcount);
         for (int i = 0; i < spawnCount; i++)
         {
             float x = Random.Range(_rangeB.position.x, _rangeA.position.x);
             float y = Random.Range(_rangeB.position.y, _rangeA.position.y);
-
-            //Instantiate(_ghost, new Vector2(x, y), Quaternion.identity);
             _count._ghostList.Add(Instantiate(_ghost, new Vector2(x, y), Quaternion.identity));
-        }
-    }
-    private void Update()
-    {
-        if (_timeLimit == true)
-        {
-            while(_ghosts.Count == 0)
-            {
-                Destroy(_ghosts[0]);
-            }
         }
     }
 }

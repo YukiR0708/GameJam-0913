@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Tamura/Scenes/TamuraScene.unity
     guid: 1ab1bc185a56836438ea7d2a9cf06bdf
   - enabled: 1
-    path: Assets/Tamura/Scenes/Game.unity
+    path: Assets/Game.unity
     guid: 97319e38498655c4481d96f15bbfdce4
   m_configObjects: {}
