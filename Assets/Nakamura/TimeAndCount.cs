@@ -24,6 +24,7 @@ public class TimeAndCount : MonoBehaviour
     /// <summary>Player2がclear下かどうかの判定</summary>
     [Header("Player2がclearしたかどうか"), SerializeField] public bool _player2ClearToF = false;
     [SerializeField] Text _timeText = default;
+    [Header("スタートまでのカウント"), SerializeField] public bool _timeStartToF = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,8 +34,11 @@ public class TimeAndCount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _time -= Time.deltaTime;
-        _timeText.text = _time.ToString("D2");
+        if (_timeStartToF)
+        {
+            _time -= Time.deltaTime;
+            _timeText.text = _time.ToString("D2");
+        }
         
         if (_time == 0)
         {
@@ -42,8 +46,11 @@ public class TimeAndCount : MonoBehaviour
         }
     }
 
-    void PLayerResult ()
+    public void Result()
     {
-
+        if (_player1ClearToF && _player2ClearToF)
+        {
+            
+        }
     }
 }
