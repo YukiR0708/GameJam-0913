@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>おばけの移動・GameManagerからInstanciateされたら作動する</summary>
+/// <summary>おばけの挙動。GameManagerからInstanciateされたら作動する</summary>
 public class ObakeController : MonoBehaviour
 {
+    TimeAndCount _timeAndCount;
 
-    void Start()
+    private void Start()
     {
-        //移動・透過度変化するアニメーション起動
+        _timeAndCount = GetComponent<TimeAndCount>();
     }
 
     private void OnDestroy()
     {
         //GameManagerのカウント用変数をカウントアップ
+        _timeAndCount._ghostCount++;
     }
 }
