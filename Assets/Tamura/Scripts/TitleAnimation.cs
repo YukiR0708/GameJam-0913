@@ -13,6 +13,7 @@ public class TitleAnimation : MonoBehaviour
     [SerializeField, Header("クリックtoスタートのテキスト")] GameObject _text;
     [SerializeField, Header("操作説明")] GameObject _setumei;
     AudioSource _audio;
+    [SerializeField, Header("クリックしたときとかになる音")] AudioClip _click;
     bool _go;
     bool _go1;
     bool _go2;
@@ -33,7 +34,7 @@ public class TitleAnimation : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) && _go && !_showSetumei)
         {
             _go = false;
-            _audio.Play();
+            _audio.PlayOneShot(_click);
             _text.transform.DORewind();
             _title.DOColor(new Color(0, 0, 0, 1), 1.5f).OnComplete(() => SceneManager.LoadScene("Game"));
         }
@@ -43,8 +44,9 @@ public class TitleAnimation : MonoBehaviour
             Debug.Log("kurikku");
             _showSetumei = true;
             _setumei.SetActive(true);
+            _audio.PlayOneShot(_click);
 
-            if(!_go1)
+            if (!_go1)
             {
                 _go1 = true;
                 _go2 = false;
@@ -57,8 +59,9 @@ public class TitleAnimation : MonoBehaviour
         {
             _showSetumei = false;
             _setumei.SetActive(false);
+            _audio.PlayOneShot(_click);
 
-            if(!_go2)
+            if (!_go2)
             {
                 _go2 = true;
                 _go1 = false;

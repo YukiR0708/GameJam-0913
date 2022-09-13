@@ -16,6 +16,7 @@ public class StartGameScene : MonoBehaviour
     AudioSource _audio;
     [SerializeField, Header("カウントダウンするときの音")] AudioClip _count;
     [SerializeField, Header("スタートするときの音")] AudioClip _gameStart;
+    [SerializeField, Header("クリックするときの音")] AudioClip _click;
     bool _go;
 
     void Start()
@@ -39,7 +40,8 @@ public class StartGameScene : MonoBehaviour
         if(_timeAndCount._timeLimitToF && _timeAndCount._ghostCountToF && Input.GetKeyDown(KeyCode.Mouse0) && _go)
         {
             _go = false;
-            _fadePanel.DOFade(255, 2.0f).OnComplete(() => SceneManager.LoadScene("Title")).SetAutoKill();
+            _audio.PlayOneShot(_click);
+            _fadePanel.DOFade(255, 1.5f).OnComplete(() => SceneManager.LoadScene("Title")).SetAutoKill();
         }
 
     }
