@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 /// <summary>ゲームシーンが始まった時の動き</summary>
@@ -15,12 +16,14 @@ public class StartGameScene : MonoBehaviour
     AudioSource _audio;
     [SerializeField, Header("カウントダウンするときの音")] AudioClip _count;
     [SerializeField, Header("スタートするときの音")] AudioClip _gameStart;
+    bool _go;
 
     void Start()
     {
         _audio = GetComponent<AudioSource>();
         _fadePanel.DOFade(0, 2.0f).OnComplete(() => _start = true).SetAutoKill();
         _countDownText.enabled = false;
+        _go = true;
     }
 
     void Update()
@@ -31,6 +34,12 @@ public class StartGameScene : MonoBehaviour
             _countDownText.enabled = true;
             _start = false;
             StartCoroutine(GameStart());
+        }
+
+        if(_timeAndCount._timeLimitToF && _timeAndCount._ghostCountToF && Input.GetKeyDown(KeyCode.Mouse0) && _go)
+        {
+            _go = false;
+            _fadePanel.DOFade(255, 2.0f).OnComplete(() => SceneManager.LoadScene("Title")).SetAutoKill();
         }
 
     }
