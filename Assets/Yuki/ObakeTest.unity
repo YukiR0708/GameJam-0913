@@ -385,6 +385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _p1CountText: {fileID: 0}
   _p2CountText: {fileID: 0}
+  _countSE: {fileID: 0}
 --- !u!4 &1129567417
 Transform:
   m_ObjectHideFlags: 0

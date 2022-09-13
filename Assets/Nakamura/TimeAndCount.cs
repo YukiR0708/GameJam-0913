@@ -30,6 +30,8 @@ public class TimeAndCount : MonoBehaviour
     /// <summary>Result用のText変数</summary>
     [Header("Resultを表示するTextを設定"), SerializeField] Text _ResultText = default;
     [Header("お化けのカウント終了"), SerializeField] public bool _ghostCountToF = false;
+    [Header("答えを表示するようのText"), SerializeField] Text _Atext = default;
+    [Header("画面切り替えの案内"), SerializeField] Text _titleChange = default;
 
     // Start is called before the first frame update
     void Start()
@@ -67,18 +69,27 @@ public class TimeAndCount : MonoBehaviour
     {
         if (_player1ClearToF && _player2ClearToF)
         {
+            _titleChange.text = "左クリックでタイトル";
+            _Atext.text = "答え" +_ghostCount.ToString("00");
             _ResultText.text = ("P1 P2 Win!!");
+
         }
         else if (_player1ClearToF)
         {
+            _titleChange.text = "左クリックでタイトル";
+            _Atext.text = "答え" + _ghostCount.ToString("00");
             _ResultText.text = ("Player1 Win!!");
         }
         else if (_player2ClearToF)
         {
+            _titleChange.text = "左クリックでタイトル";
+            _Atext.text = "答え" + _ghostCount.ToString("00");
             _ResultText.text = ("Player2 Win!!");
         }
         else
         {
+            _titleChange.text = "左クリックでタイトル";
+            _Atext.text = "答え" + _ghostCount.ToString("00");
             _ResultText.text = ("Draw");
         }
     }
