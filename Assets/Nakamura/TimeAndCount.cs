@@ -27,6 +27,7 @@ public class TimeAndCount : MonoBehaviour
     [Header("timeを表示する用のTextを設定"),SerializeField] Text _timeText = default;
     /// <summary>TimeLimitを始めるTrigger</summary>
     [Header("スタートまでのカウント"), SerializeField] public bool _timeStartToF = false;
+    /// <summary>Result用のText変数</summary>
     [Header("Resultを表示するTextを設定"), SerializeField] Text _ResultText = default;
     // Start is called before the first frame update
     void Start()
@@ -40,7 +41,7 @@ public class TimeAndCount : MonoBehaviour
         if (_timeStartToF)
         {
             _time -= Time.deltaTime;
-            _timeText.text = _time.ToString("D2");
+            _timeText.text = _time.ToString("00");
         }
         
         if (_time == 0)
