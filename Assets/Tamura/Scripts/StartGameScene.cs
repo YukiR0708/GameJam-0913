@@ -10,22 +10,37 @@ public class StartGameScene : MonoBehaviour
     [SerializeField, Header("フェード用パネル")] Image _fadePanel;
     [SerializeField, Header("タイムカウントスクリプト")] TimeAndCount _timeAndCount;
     bool _start;
-    float _countDown = 3;
     [SerializeField, Header("カウントダウンするテキスト")] Text _countDownText;
 
     void Start()
     {
         _fadePanel.DOFade(0, 1.0f).OnComplete(() => _start = true).SetAutoKill();
-        _countDownText.text = $"{_countDown}";
+        _countDownText.enabled = false;
     }
 
     void Update()
     {
-        
-        if(_start)
+
+        if (_start)
         {
-            _countDown -= Time.deltaTime;
+            _countDownText.enabled = true;
+            _start = false;
+            StartCoroutine(GameStart());
         }
 
+    }
+
+    IEnumerator GameStart()
+    {
+        _countDownText.text = "3";
+        yield return new WaitForSeconds(1.0f);
+        _countDownText.text = "2";
+        yield return new WaitForSeconds(1.0f);
+        _countDownText.text = "1";
+        yield return new WaitForSeconds(1.0f);
+        _countDownText.text = $"START!";
+        yield return new WaitForSeconds(1.0f);
+        _countDownText.enabled = false;
+        _timeAndCount._timeStartToF = true;
     }
 }
