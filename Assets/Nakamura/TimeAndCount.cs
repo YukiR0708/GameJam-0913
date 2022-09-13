@@ -14,7 +14,7 @@ public class TimeAndCount : MonoBehaviour
     /// <summary>Player2のCount変数</summary>
     [Header("Player2のCount"), SerializeField] public int _p2Count = 0;
     /// <summary>お化けの管理用List</summary>
-    [Header("お化けのList"), SerializeField] public List<GameObject> _ghostList = new List<GameObject>();
+    [Header("お化けのList"), SerializeField] public List<GhostsCountAndSpawn> _ghostList = new List<GhostsCountAndSpawn>();
     /// <summary>お化けのカウント用変数(OnDestroy)</summary>
     [Header("お化けのCount変数"), SerializeField] public int _ghostCount;
     /// <summary>制限時間に達したらtrue </summary>
