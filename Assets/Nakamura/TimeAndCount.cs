@@ -38,18 +38,41 @@ public class TimeAndCount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //開始の合図でカウントダウンが始まる
         if (_timeStartToF)
         {
             _time -= Time.deltaTime;
             _timeText.text = _time.ToString("00");
         }
         
+        //制限時間がゼロになったらtrueを返す
         if (_time == 0)
         {
             _timeLimitToF = true;
+            _time = 0;
+            _timeText.text ="";
+        }
+
+        //制限時間が0になったときに集計を開始する
+        if (_timeLimitToF)
+        {
+            //Player1の集計
+            if (_p1Count == _ghostCount)
+            {
+                _player1ClearToF = true;
+            }
+
+            //Player2の集計
+            if (_p2Count == _ghostCount)
+            {
+                _player2ClearToF = true;
+            }
+
+            Result();
         }
     }
 
+    //集計が終わった後に結果を表示する
     public void Result()
     {
         if (_player1ClearToF && _player2ClearToF)
