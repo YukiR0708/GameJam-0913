@@ -23,8 +23,11 @@ public class TimeAndCount : MonoBehaviour
     [Header("Player1がclearしたかどうか"), SerializeField] public bool _player1ClearToF = false;
     /// <summary>Player2がclear下かどうかの判定</summary>
     [Header("Player2がclearしたかどうか"), SerializeField] public bool _player2ClearToF = false;
-    [SerializeField] Text _timeText = default;
+    /// <summary>現在時刻を表示する</summary>
+    [Header("timeを表示する用のTextを設定"),SerializeField] Text _timeText = default;
+    /// <summary>TimeLimitを始めるTrigger</summary>
     [Header("スタートまでのカウント"), SerializeField] public bool _timeStartToF = false;
+    [Header("Resultを表示するTextを設定"), SerializeField] Text _ResultText = default;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +53,19 @@ public class TimeAndCount : MonoBehaviour
     {
         if (_player1ClearToF && _player2ClearToF)
         {
-            
+            _ResultText.text = ("Your are Win!!");
+        }
+        else if (_player1ClearToF)
+        {
+            _ResultText.text = ("Player1 Win!!");
+        }
+        else if (_player2ClearToF)
+        {
+            _ResultText.text = ("Player2 Win!!");
+        }
+        else
+        {
+            _ResultText.text = ("Draw");
         }
     }
 }
