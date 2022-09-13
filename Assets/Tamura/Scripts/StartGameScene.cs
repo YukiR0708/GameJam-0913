@@ -17,14 +17,12 @@ public class StartGameScene : MonoBehaviour
     [SerializeField, Header("カウントダウンするときの音")] AudioClip _count;
     [SerializeField, Header("スタートするときの音")] AudioClip _gameStart;
     [SerializeField, Header("クリックするときの音")] AudioClip _click;
-    bool _go;
 
     void Start()
     {
         _audio = GetComponent<AudioSource>();
         _fadePanel.DOFade(0, 2.0f).OnComplete(() => _start = true).SetAutoKill();
         _countDownText.enabled = false;
-        _go = true;
     }
 
     void Update()
@@ -37,11 +35,9 @@ public class StartGameScene : MonoBehaviour
             StartCoroutine(GameStart());
         }
 
-        if(_timeAndCount._timeLimitToF && _timeAndCount._ghostCountToF && Input.GetKeyDown(KeyCode.Mouse0) && _go)
+        if(_timeAndCount._timeLimitToF && _timeAndCount._ghostCountToF && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            _go = false;
-            _audio.PlayOneShot(_click);
-            _fadePanel.DOFade(255, 1.5f).OnComplete(() => SceneManager.LoadScene("Title")).SetAutoKill();
+            StartCoroutine(GoTitle());
         }
 
     }
@@ -62,5 +58,12 @@ public class StartGameScene : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         _countDownText.enabled = false;
         _timeAndCount._timeStartToF = true;
+    }
+
+    IEnumerator GoTitle()
+    {
+        _audio.PlayOneShot(_click);
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene("Title");
     }
 }

@@ -6,11 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Tamura/Scenes/TamuraMei.unity
-    guid: 702ebd58b20f9fe4aac6e0fc8f09cb9a
-  - enabled: 1
-    path: Assets/Tamura/Scenes/TamuraScene.unity
-    guid: 1ab1bc185a56836438ea7d2a9cf06bdf
+    path: Assets/Title.unity
+    guid: eb8761adebdf27d44ba4e825c85010ec
   - enabled: 1
     path: Assets/Game.unity
     guid: 97319e38498655c4481d96f15bbfdce4
