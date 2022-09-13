@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimeAndCount : MonoBehaviour
 {
@@ -18,15 +19,31 @@ public class TimeAndCount : MonoBehaviour
     [Header("‚¨‰»‚¯‚ÌCount•Ï”"), SerializeField] public int _ghostCount;
     /// <summary>§ŒÀŠÔ‚É’B‚µ‚½‚çtrue </summary>
     [Header("§ŒÀŠÔ‚É’B‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©"), SerializeField] public bool _timeLimitToF = false;
+    /// <summary>Player1‚ªclear‰º‚©‚Ç‚¤‚©‚Ì”»’è</summary>
+    [Header("Player1‚ªclear‚µ‚½‚©‚Ç‚¤‚©"), SerializeField] public bool _player1ClearToF = false;
+    /// <summary>Player2‚ªclear‰º‚©‚Ç‚¤‚©‚Ì”»’è</summary>
+    [Header("Player2‚ªclear‚µ‚½‚©‚Ç‚¤‚©"), SerializeField] public bool _player2ClearToF = false;
+    [SerializeField] Text _timeText = default;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _time = _timeLimit;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _time += Time.deltaTime;
+        _time -= Time.deltaTime;
+        _timeText.text = _time.ToString("D2");
+        
+        if (_time == 0)
+        {
+            _timeLimitToF = true;
+        }
+    }
+
+    void PLayerResult ()
+    {
+
     }
 }
