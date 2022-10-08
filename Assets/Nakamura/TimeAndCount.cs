@@ -30,8 +30,12 @@ public class TimeAndCount : MonoBehaviour
     /// <summary>Result用のText変数</summary>
     [Header("Resultを表示するTextを設定"), SerializeField] Text _ResultText = default;
     [Header("お化けのカウント終了"), SerializeField] public bool _ghostCountToF = false;
-    [Header("答えを表示するようのText"), SerializeField] Text _Atext = default;
     [Header("画面切り替えの案内"), SerializeField] Text _titleChange = default;
+    bool _gameoverSE;
+    [SerializeField] AudioClip _gameover;
+    [SerializeField] AudioClip _win;
+    [SerializeField] AudioClip _draw;
+    bool _go;
 
     // Start is called before the first frame update
     void Start()
@@ -55,11 +59,18 @@ public class TimeAndCount : MonoBehaviour
             _timeLimitToF = true;
             _time = 0;
             _timeText.text ="";
+
+            if(!_gameoverSE)
+            {
+                _gameoverSE = true;
+                GetComponent<AudioSource>().PlayOneShot(_gameover);
+            }
         }
 
         //制限時間が0になったときに集計を開始する
-        if (_timeLimitToF && _ghostCountToF)
+        if (_timeLimitToF && _ghostCountToF && !_go)
         {
+            _go = true;
             PlayerCount();
         }
     }
@@ -69,28 +80,29 @@ public class TimeAndCount : MonoBehaviour
     {
         if (_player1ClearToF && _player2ClearToF)
         {
-            _titleChange.text = "左クリックでタイトル";
-            _Atext.text = "答え" +_ghostCount.ToString("00");
+            _titleChange.text = "Tでタイトル\nRでもういちど";
             _ResultText.text = ("P1 P2 Win!!");
+            GetComponent<AudioSource>().PlayOneShot(_win);
 
         }
         else if (_player1ClearToF)
         {
-            _titleChange.text = "左クリックでタイトル";
-            _Atext.text = "答え" + _ghostCount.ToString("00");
+            _titleChange.text = "Tでタイトル\nRでもういちど";
             _ResultText.text = ("Player1 Win!!");
+            GetComponent<AudioSource>().PlayOneShot(_win);
         }
         else if (_player2ClearToF)
         {
-            _titleChange.text = "左クリックでタイトル";
-            _Atext.text = "答え" + _ghostCount.ToString("00");
+            _titleChange.text = "Tでタイトル\nRでもういちど";
             _ResultText.text = ("Player2 Win!!");
+            GetComponent<AudioSource>().PlayOneShot(_win);
         }
         else
         {
-            _titleChange.text = "左クリックでタイトル";
-            _Atext.text = "答え" + _ghostCount.ToString("00");
+            _titleChange.text = "Tでタイトル\nRでもういちど";
             _ResultText.text = ("Draw");
+            GetComponent<AudioSource>().PlayOneShot(_draw);
+            Debug.Log("うわー");
         }
     }
 

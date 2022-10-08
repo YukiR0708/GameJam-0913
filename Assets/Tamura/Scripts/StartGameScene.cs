@@ -23,7 +23,7 @@ public class StartGameScene : MonoBehaviour
     void Start()
     {
         _audio = GetComponent<AudioSource>();
-        _fadePanel.DOFade(0, 2.0f).OnComplete(() => _start = true).SetAutoKill();
+        _fadePanel.DOFade(0, 2.0f).OnComplete(() => { _start = true; _audio.PlayOneShot(_count, 1.5f); }).SetAutoKill();
         _countDownText.enabled = false;
     }
 
@@ -38,21 +38,39 @@ public class StartGameScene : MonoBehaviour
             if (_second < 0)
             {
                 _countDown--;
-                _countDownText.text = $"{_countDown}";
-                _audio.PlayOneShot(_count);
-                _second = 1;
-            }
 
-            if (_countDown <= 0)
-            {
-                StartCoroutine(GameStart());
+                if(_countDown > 0)
+                {
+                    _audio.PlayOneShot(_count, 2.0f);
+                    _countDownText.text = $"{_countDown}";
+                    _second = 1;
+                }
+                else
+                {
+                    _start = false;
+                    StartCoroutine(GameStart());
+                }
+                
             }
 
         }
 
-        if(_timeAndCount._timeLimitToF && _timeAndCount._ghostCountToF && Input.GetKeyDown(KeyCode.Mouse0))
+        if(_timeAndCount._timeLimitToF && _timeAndCount._ghostCountToF)
         {
-            StartCoroutine(GoTitle());
+
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                _audio.PlayOneShot(_click);
+                _fadePanel.DOFade(1, 1.0f).OnComplete(() => SceneManager.LoadScene("Title"))
+                    .SetEase(Ease.Linear).SetAutoKill();
+            }
+            else if(Input.GetKeyDown(KeyCode.R))
+            {
+                _audio.PlayOneShot(_click);
+                _fadePanel.DOFade(1, 1.0f).OnComplete(() => SceneManager.LoadScene("Game"))
+                    .SetEase(Ease.Linear).SetAutoKill();
+            }
+
         }
 
     }
@@ -60,17 +78,10 @@ public class StartGameScene : MonoBehaviour
     IEnumerator GameStart()
     {
         _countDownText.text = $"START!";
-        _audio.PlayOneShot(_gameStart);
+        _audio.PlayOneShot(_gameStart, 2.0f);
         yield return new WaitForSeconds(1.0f);
         _countDownText.enabled = false;
         _timeAndCount._timeStartToF = true;
-        _start = false;
     }
 
-    IEnumerator GoTitle()
-    {
-        _audio.PlayOneShot(_click);
-        yield return new WaitForSeconds(1.0f);
-        SceneManager.LoadScene("Title");
-    }
 }

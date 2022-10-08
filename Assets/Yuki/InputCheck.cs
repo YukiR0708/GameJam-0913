@@ -13,43 +13,47 @@ public class InputCheck : MonoBehaviour
     [SerializeField, Header("カウント時のSE")] AudioClip _countSE;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
         _timeAndCount = GetComponent<TimeAndCount>();
         _audioSource = GetComponent<AudioSource>();
 
-        _p1CountText.text = _p1CountText.ToString();
-        _p2CountText.text = _p2CountText.ToString();
+        _p1CountText.text = _timeAndCount._p1Count.ToString();
+        _p2CountText.text = _timeAndCount._p2Count.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Player1の操作 → Wでプラス、Sでマイナス
-        //Player2の操作 → Oでプラス、Lでマイナス　
-        if (Input.GetKeyDown(KeyCode.W))
+        if (!_timeAndCount._timeLimitToF && _timeAndCount._timeStartToF)
         {
-            _timeAndCount._p1Count++;
-            _audioSource.PlayOneShot(_countSE);
-        }
-        else if(Input.GetKeyDown(KeyCode.S) && _timeAndCount._p1Count > 0)
-        {
-            _timeAndCount._p1Count--;
-            _audioSource.PlayOneShot(_countSE);
-        }
-        else if(Input.GetKeyDown(KeyCode.O))
-        {
-            _timeAndCount._p2Count++;
-            _audioSource.PlayOneShot(_countSE);
-        }
-        else if(Input.GetKeyDown(KeyCode.L) && _timeAndCount._p2Count > 0)
-        {
-            _timeAndCount._p2Count--;
-            _audioSource.PlayOneShot(_countSE);
-        }
+            //Player1の操作 → Wでプラス、Sでマイナス
+            //Player2の操作 → Oでプラス、Lでマイナス　
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                _timeAndCount._p1Count++;
+                _audioSource.PlayOneShot(_countSE);
+            }
+            else if (Input.GetKeyDown(KeyCode.S) && _timeAndCount._p1Count > 0)
+            {
+                _timeAndCount._p1Count--;
+                _audioSource.PlayOneShot(_countSE);
+            }
+            else if (Input.GetKeyDown(KeyCode.O))
+            {
+                _timeAndCount._p2Count++;
+                _audioSource.PlayOneShot(_countSE);
+            }
+            else if (Input.GetKeyDown(KeyCode.L) && _timeAndCount._p2Count > 0)
+            {
+                _timeAndCount._p2Count--;
+                _audioSource.PlayOneShot(_countSE);
+            }
 
-        _p1CountText.text = _timeAndCount._p1Count.ToString();
-        _p2CountText.text = _timeAndCount._p2Count.ToString();
+            _p1CountText.text = _timeAndCount._p1Count.ToString();
+            _p2CountText.text = _timeAndCount._p2Count.ToString();
+        }
     }
 }
