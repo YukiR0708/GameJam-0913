@@ -17,6 +17,8 @@ public class StartGameScene : MonoBehaviour
     [SerializeField, Header("カウントダウンするときの音")] AudioClip _count;
     [SerializeField, Header("スタートするときの音")] AudioClip _gameStart;
     [SerializeField, Header("クリックするときの音")] AudioClip _click;
+    float _second = 1;
+    int _countDown = 3;
 
     void Start()
     {
@@ -27,12 +29,25 @@ public class StartGameScene : MonoBehaviour
 
     void Update()
     {
-
+        
         if (_start)
         {
             _countDownText.enabled = true;
-            _start = false;
-            StartCoroutine(GameStart());
+            _second -= Time.deltaTime;
+
+            if (_second < 0)
+            {
+                _countDown--;
+                _countDownText.text = $"{_countDown}";
+                _audio.PlayOneShot(_count);
+                _second = 1;
+            }
+
+            if (_countDown <= 0)
+            {
+                StartCoroutine(GameStart());
+            }
+
         }
 
         if(_timeAndCount._timeLimitToF && _timeAndCount._ghostCountToF && Input.GetKeyDown(KeyCode.Mouse0))
@@ -44,20 +59,12 @@ public class StartGameScene : MonoBehaviour
 
     IEnumerator GameStart()
     {
-        _countDownText.text = "3";
-        _audio.PlayOneShot(_count);
-        yield return new WaitForSeconds(1.0f);
-        _countDownText.text = "2";
-        _audio.PlayOneShot(_count);
-        yield return new WaitForSeconds(1.0f);
-        _countDownText.text = "1";
-        _audio.PlayOneShot(_count);
-        yield return new WaitForSeconds(1.0f);
         _countDownText.text = $"START!";
         _audio.PlayOneShot(_gameStart);
         yield return new WaitForSeconds(1.0f);
         _countDownText.enabled = false;
         _timeAndCount._timeStartToF = true;
+        _start = false;
     }
 
     IEnumerator GoTitle()
